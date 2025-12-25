@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 BlackRoad Codex Discussion
+    url: https://github.com/orgs/BlackRoad-Media/discussions
+    about: Join the BlackRoad ecosystem discussion
+  - name: 📚 BlackRoad Documentation
+    url: https://github.com/BlackRoad-Media
+    about: View BlackRoad ecosystem documentation
+  - name: 🚨 Security Issue
+    url: https://github.com/BlackRoad-Media/content/security/advisories/new
+    about: Report a security vulnerability privately

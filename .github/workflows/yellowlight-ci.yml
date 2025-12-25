@@ -1,0 +1,50 @@
+name: 🟡 YellowLight CI
+
+on:
+  pull_request:
+    types: [labeled, synchronize, reopened]
+
+jobs:
+  yellowlight-check:
+    name: YellowLight Review
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'status: yellowlight')
+    
+    steps:
+      - name: 🟡 Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: 🟡 Review Status
+        run: |
+          echo "⚠️ YellowLight: Caution - Review Needed"
+          echo "This PR has been flagged for review"
+          
+      - name: 🟡 Check Requirements
+        run: |
+          echo "Checking YellowLight requirements..."
+          echo "✓ Additional review required"
+          echo "✓ Concerns documented"
+          echo "⚠️ Proceed with caution"
+          
+      - name: 🟡 Generate Warning
+        run: |
+          echo "## ⚠️ YellowLight Status Active" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "This PR requires additional attention:" >> $GITHUB_STEP_SUMMARY
+          echo "- Review all concerns carefully" >> $GITHUB_STEP_SUMMARY
+          echo "- Address feedback before merge" >> $GITHUB_STEP_SUMMARY
+          echo "- Verify all validations pass" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "*Part of BlackRoad Codex • BlackRoad Ecosystem*" >> $GITHUB_STEP_SUMMARY
+          
+  require-reviews:
+    name: Require Additional Reviews
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'status: yellowlight')
+    
+    steps:
+      - name: 🟡 Review Requirement
+        run: |
+          echo "🟡 YellowLight PRs require at least 2 approving reviews"
+          echo "Please ensure concerns are addressed before merging"

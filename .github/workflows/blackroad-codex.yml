@@ -1,0 +1,156 @@
+name: BlackRoad Codex Validation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+  workflow_dispatch:
+
+jobs:
+  validate-structure:
+    name: Validate Repository Structure
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: 🔍 Check Required Files
+        run: |
+          echo "Checking for required BlackRoad Codex files..."
+          
+          required_files=(
+            ".github/BLACKROAD_CODEX.md"
+            ".github/ISSUE_TEMPLATE/greenlight.yml"
+            ".github/ISSUE_TEMPLATE/yellowlight.yml"
+            ".github/ISSUE_TEMPLATE/redlight.yml"
+            ".github/pull_request_template.md"
+            "CONTRIBUTING.md"
+            "CODE_OF_CONDUCT.md"
+            "SECURITY.md"
+            "README.md"
+          )
+          
+          missing_files=()
+          
+          for file in "${required_files[@]}"; do
+            if [ -f "$file" ]; then
+              echo "✅ Found: $file"
+            else
+              echo "❌ Missing: $file"
+              missing_files+=("$file")
+            fi
+          done
+          
+          if [ ${#missing_files[@]} -gt 0 ]; then
+            echo ""
+            echo "⚠️ Missing required files for BlackRoad Codex compliance"
+            exit 1
+          fi
+          
+          echo ""
+          echo "✅ All required BlackRoad Codex files present"
+          
+      - name: 🔍 Check Workflows
+        run: |
+          echo "Checking for traffic light workflows..."
+          
+          workflows=(
+            ".github/workflows/greenlight-ci.yml"
+            ".github/workflows/yellowlight-ci.yml"
+            ".github/workflows/redlight-ci.yml"
+          )
+          
+          for workflow in "${workflows[@]}"; do
+            if [ -f "$workflow" ]; then
+              echo "✅ Found: $workflow"
+            else
+              echo "⚠️ Optional workflow missing: $workflow"
+            fi
+          done
+          
+      - name: 📊 Generate Report
+        run: |
+          echo "## 🚦 BlackRoad Codex Validation Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **Status:** Repository is BlackRoad Codex compliant" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### ✅ Validated Components" >> $GITHUB_STEP_SUMMARY
+          echo "- Traffic Light Issue Templates (GreenLight, YellowLight, RedLight)" >> $GITHUB_STEP_SUMMARY
+          echo "- Pull Request Template" >> $GITHUB_STEP_SUMMARY
+          echo "- Contributing Guidelines" >> $GITHUB_STEP_SUMMARY
+          echo "- Code of Conduct" >> $GITHUB_STEP_SUMMARY
+          echo "- Security Policy" >> $GITHUB_STEP_SUMMARY
+          echo "- BlackRoad Codex Documentation" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "*Part of BlackRoad Codex • BlackRoad Ecosystem*" >> $GITHUB_STEP_SUMMARY
+
+  check-pr-status:
+    name: Check PR Traffic Light Status
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: 🚦 Detect Traffic Light Status
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const body = pr.body || '';
+            const title = pr.title || '';
+            
+            let status = 'unknown';
+            
+            if (body.includes('🟢') || title.includes('GreenLight') || body.toLowerCase().includes('greenlight')) {
+              status = '🟢 GreenLight';
+            } else if (body.includes('🟡') || title.includes('YellowLight') || body.toLowerCase().includes('yellowlight')) {
+              status = '🟡 YellowLight';
+            } else if (body.includes('🔴') || title.includes('RedLight') || body.toLowerCase().includes('redlight')) {
+              status = '🔴 RedLight';
+            }
+            
+            core.summary
+              .addHeading('🚦 Traffic Light Status Detection')
+              .addRaw(`\n**Detected Status:** ${status}\n`)
+              .addRaw('\n### Status Indicators:\n')
+              .addList([
+                '🟢 GreenLight: Ready to merge',
+                '🟡 YellowLight: Needs review',
+                '🔴 RedLight: Blocked - Do not merge'
+              ])
+              .write();
+            
+            if (status === 'unknown') {
+              core.warning('No traffic light status detected in PR. Please indicate status (🟢/🟡/🔴)');
+            } else {
+              core.info(`Traffic light status: ${status}`);
+            }
+
+  blackroad-summary:
+    name: BlackRoad Ecosystem Summary
+    runs-on: ubuntu-latest
+    needs: [validate-structure]
+    if: always()
+    
+    steps:
+      - name: 📊 Generate Summary
+        run: |
+          echo "## 🎯 BlackRoad Ecosystem Integration" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "This repository is part of the **BlackRoad Ecosystem** and follows **BlackRoad Codex** standards." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🚦 Traffic Light System" >> $GITHUB_STEP_SUMMARY
+          echo "- 🟢 **GreenLight:** Ready to proceed" >> $GITHUB_STEP_SUMMARY
+          echo "- 🟡 **YellowLight:** Needs review" >> $GITHUB_STEP_SUMMARY
+          echo "- 🔴 **RedLight:** Critical/Blocked" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📚 Resources" >> $GITHUB_STEP_SUMMARY
+          echo "- [BlackRoad Codex](.github/BLACKROAD_CODEX.md)" >> $GITHUB_STEP_SUMMARY
+          echo "- [Contributing Guidelines](CONTRIBUTING.md)" >> $GITHUB_STEP_SUMMARY
+          echo "- [Security Policy](SECURITY.md)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "*Part of BlackRoad-Media • BlackRoad Ecosystem*" >> $GITHUB_STEP_SUMMARY

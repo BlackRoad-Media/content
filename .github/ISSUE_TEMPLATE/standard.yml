@@ -1,0 +1,59 @@
+name: 📋 Standard Issue
+description: General purpose issue template for items that don't fit other categories
+title: "[Issue] "
+labels: ["triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Standard Issue Template
+        Use this template for general issues. For status-specific issues, use:
+        - 🟢 GreenLight for ready/approved items
+        - 🟡 YellowLight for items needing review
+        - 🔴 RedLight for critical/blocked items
+        
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      description: Brief description of the issue
+      placeholder: "Describe the issue briefly"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Issue Type
+      description: What type of issue is this?
+      options:
+        - Bug Report
+        - Feature Request
+        - Documentation
+        - Question
+        - Discussion
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Detailed description of the issue
+      placeholder: Provide a clear and detailed description
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Any additional information, screenshots, or context
+      placeholder: Add any additional context here
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        **Part of BlackRoad Codex** • BlackRoad Ecosystem

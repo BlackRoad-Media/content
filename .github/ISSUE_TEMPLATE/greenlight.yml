@@ -1,0 +1,93 @@
+name: 🟢 GreenLight - Ready to Proceed
+description: Use this template when everything is ready to proceed (approved, tested, validated)
+title: "[GreenLight] "
+labels: ["status: greenlight", "ready", "approved"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🟢 GreenLight Status
+        This issue indicates that all systems are go! Everything is validated, approved, and ready to proceed.
+        
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      description: Brief description of what's ready to proceed
+      placeholder: "Feature X is ready for production deployment"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: What type of work is this?
+      options:
+        - Feature Ready
+        - Bug Fix Approved
+        - Documentation Complete
+        - Deployment Ready
+        - Review Passed
+        - Testing Complete
+        - Dependencies Updated
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Detailed description of what's ready and why it has GreenLight status
+      placeholder: |
+        - All tests passing
+        - Code review approved
+        - Documentation updated
+        - Security scan clean
+    validations:
+      required: true
+
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation Checklist
+      description: What validations have been completed?
+      value: |
+        - [ ] Code review completed
+        - [ ] All tests passing
+        - [ ] Documentation updated
+        - [ ] Security scan completed
+        - [ ] Performance validated
+        - [ ] Stakeholder approval received
+    validations:
+      required: true
+
+  - type: textarea
+    id: next_steps
+    attributes:
+      label: Next Steps
+      description: What are the immediate next steps?
+      placeholder: "Deploy to production, merge PR, etc."
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: Any dependencies or related issues?
+      placeholder: "Links to related PRs, issues, or external dependencies"
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Any other context, screenshots, or information
+      placeholder: "Add any additional context here"
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        **Part of BlackRoad Codex** • BlackRoad Ecosystem

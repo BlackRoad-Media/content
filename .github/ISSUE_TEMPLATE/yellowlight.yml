@@ -1,0 +1,113 @@
+name: 🟡 YellowLight - Caution/Review Needed
+description: Use this template when there are concerns, blockers, or items that need attention
+title: "[YellowLight] "
+labels: ["status: yellowlight", "needs-review", "caution"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🟡 YellowLight Status
+        This issue indicates caution is needed. There are concerns, potential issues, or items requiring review before proceeding.
+        
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      description: Brief description of the concern or item needing attention
+      placeholder: "Feature X needs additional review before deployment"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How urgent is this concern?
+      options:
+        - High - Needs immediate attention
+        - Medium - Should be addressed soon
+        - Low - Can be addressed later
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: What type of concern is this?
+      options:
+        - Code Quality Issue
+        - Performance Concern
+        - Security Risk
+        - Documentation Gap
+        - Testing Incomplete
+        - Dependency Issue
+        - Design Question
+        - Technical Debt
+        - Resource Constraint
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Detailed description of the concern or issue
+      placeholder: |
+        What is the specific concern or issue that needs attention?
+        Why is this flagged as YellowLight?
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact Assessment
+      description: What is the potential impact if this is not addressed?
+      placeholder: |
+        - User impact
+        - System impact
+        - Timeline impact
+        - Risk assessment
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_solution
+    attributes:
+      label: Proposed Solution
+      description: What steps could resolve this concern?
+      placeholder: |
+        1. First step
+        2. Second step
+        3. Third step
+    validations:
+      required: true
+
+  - type: textarea
+    id: blockers
+    attributes:
+      label: Blockers
+      description: What's preventing this from being resolved?
+      placeholder: "List any blockers or dependencies preventing resolution"
+
+  - type: textarea
+    id: research
+    attributes:
+      label: Research/Investigation Needed
+      description: What research or investigation is required?
+      placeholder: "What needs to be investigated or researched to resolve this?"
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Any other context, screenshots, logs, or information
+      placeholder: "Add any additional context, error logs, screenshots here"
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        **Part of BlackRoad Codex** • BlackRoad Ecosystem

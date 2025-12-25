@@ -1,0 +1,149 @@
+name: 🔴 RedLight - Critical/Blocked
+description: Use this template for critical issues, blockers, or items requiring immediate action
+title: "[RedLight] "
+labels: ["status: redlight", "critical", "blocked", "urgent"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🔴 RedLight Status
+        This issue indicates a critical problem or complete blocker. Immediate action is required.
+        
+        **⚠️ CRITICAL: This requires immediate attention from the team.**
+        
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      description: Brief description of the critical issue
+      placeholder: "Production outage affecting all users"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How severe is this issue?
+      options:
+        - P0 - Complete System Failure
+        - P1 - Critical Production Issue
+        - P2 - Major Feature Broken
+        - P3 - Significant Blocker
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: What type of critical issue is this?
+      options:
+        - Production Outage
+        - Security Vulnerability
+        - Data Loss/Corruption
+        - Complete Blocker
+        - System Down
+        - Critical Bug
+        - Breaking Change
+        - Compliance Issue
+        - Infrastructure Failure
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Detailed description of the critical issue
+      placeholder: |
+        What is the critical issue?
+        When did it start?
+        Who is affected?
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: What is the current impact?
+      placeholder: |
+        - Number of users affected
+        - Systems affected
+        - Business impact
+        - Data at risk
+    validations:
+      required: true
+
+  - type: textarea
+    id: immediate_action
+    attributes:
+      label: Immediate Action Required
+      description: What needs to be done RIGHT NOW?
+      placeholder: |
+        1. Immediate step 1
+        2. Immediate step 2
+        3. Immediate step 3
+    validations:
+      required: true
+
+  - type: textarea
+    id: timeline
+    attributes:
+      label: Timeline
+      description: When did this start? What's the urgency?
+      placeholder: |
+        - Started: [Date/Time]
+        - Must be resolved by: [Date/Time]
+        - Current status: [Active/Investigating/Mitigating]
+    validations:
+      required: true
+
+  - type: textarea
+    id: workaround
+    attributes:
+      label: Temporary Workaround
+      description: Is there any temporary workaround available?
+      placeholder: "Describe any temporary workarounds or mitigation steps"
+
+  - type: textarea
+    id: root_cause
+    attributes:
+      label: Root Cause (if known)
+      description: What is causing this issue?
+      placeholder: "Describe the root cause if identified, or 'Under investigation'"
+
+  - type: textarea
+    id: team_notified
+    attributes:
+      label: Team Members Notified
+      description: Who has been notified about this critical issue?
+      placeholder: |
+        - @username1
+        - @username2
+        - @team-name
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error Logs/Stack Traces
+      description: Include any relevant error logs, stack traces, or diagnostic information
+      placeholder: "Paste error logs, stack traces, or diagnostic output here"
+      render: shell
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Any other context, screenshots, or information
+      placeholder: "Add any additional context here"
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        **Part of BlackRoad Codex** • BlackRoad Ecosystem

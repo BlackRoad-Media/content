@@ -1,0 +1,78 @@
+name: Auto Label
+
+on:
+  issues:
+    types: [opened, edited]
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  auto-label:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    
+    steps:
+      - name: 🏷️ Auto Label Based on Content
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const item = context.payload.issue || context.payload.pull_request;
+            const title = item.title.toLowerCase();
+            const body = (item.body || '').toLowerCase();
+            const labels = [];
+            
+            // Check for traffic light indicators
+            if (title.includes('greenlight') || body.includes('🟢') || body.includes('greenlight')) {
+              labels.push('status: greenlight', 'ready');
+            }
+            
+            if (title.includes('yellowlight') || body.includes('🟡') || body.includes('yellowlight')) {
+              labels.push('status: yellowlight', 'needs-review');
+            }
+            
+            if (title.includes('redlight') || body.includes('🔴') || body.includes('redlight')) {
+              labels.push('status: redlight', 'critical');
+            }
+            
+            // Check for type indicators
+            if (title.includes('bug') || title.includes('fix')) {
+              labels.push('bug');
+            }
+            
+            if (title.includes('feat') || title.includes('feature') || title.includes('enhancement')) {
+              labels.push('enhancement');
+            }
+            
+            if (title.includes('docs') || title.includes('documentation')) {
+              labels.push('documentation');
+            }
+            
+            if (title.includes('security') || body.includes('security') || body.includes('vulnerability')) {
+              labels.push('security');
+              if (!labels.includes('status: redlight')) {
+                labels.push('status: yellowlight');
+              }
+            }
+            
+            // Apply labels if any were identified
+            if (labels.length > 0) {
+              if (context.payload.issue) {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: item.number,
+                  labels: labels
+                });
+              } else {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: item.number,
+                  labels: labels
+                });
+              }
+              
+              console.log(`Added labels: ${labels.join(', ')}`);
+            }
