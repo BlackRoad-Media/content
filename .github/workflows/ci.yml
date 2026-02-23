@@ -9,16 +9,18 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: pip install pytest flake8
       - name: Lint
-        run: |
-          pip install flake8
-          flake8 src/ --max-line-length=120 --ignore=E501,W503 || true
-      - name: Smoke test
-        run: |
-          python src/*.py --help 2>/dev/null || python src/*.py 2>/dev/null | head -5 || true
-
+        run: flake8 src/ --max-line-length=120 --extend-ignore=E203
+      - name: Test
+        run: pytest src/test_content_manager.py -v
