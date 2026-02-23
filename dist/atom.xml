@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>BlackRoad OS — World Artifacts</title>
+  <link href="https://blackroad.ai"/>
+  <link rel="self" href="https://blackroad-os.github.io/content/atom.xml"/>
+  <id>https://blackroad.ai/worlds</id>
+  <updated>2026-01-01T00:00:00Z</updated>
+  <entry>
+    <title>World Artifacts Feed — Initializing</title>
+    <id>https://blackroad.ai/worlds/init</id>
+    <updated>2026-01-01T00:00:00Z</updated>
+    <summary>This feed auto-updates every 5 minutes via GitHub Actions.</summary>
+  </entry>
+</feed>
