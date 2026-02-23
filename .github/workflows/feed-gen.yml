@@ -1,0 +1,36 @@
+name: Regenerate Worlds Feed
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"   # every 5 minutes
+  workflow_dispatch:
+  repository_dispatch:
+    types: [worlds-updated]
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Generate feeds
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p dist
+          python src/rss_feed.py --format rss --output dist/rss.xml --limit 100
+          python src/rss_feed.py --format atom --output dist/atom.xml --limit 100
+          python src/rss_feed.py --format json --output dist/feed.json --limit 100
+
+      - name: Commit and push feeds
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add dist/
+          git diff --staged --quiet && echo "No changes" || git commit -m "chore: regenerate worlds feed [skip ci]"
+          git push
