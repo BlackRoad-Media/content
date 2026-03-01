@@ -1,0 +1,10 @@
+# robots.txt — BlackRoad OS, Inc.
+# https://blackroad.io/
+
+User-agent: *
+Allow: /
+
+Sitemap: https://blackroad.io/sitemap.xml
+
+# BlackRoad OS, Inc. is not affiliated with BlackRock Inc.
+# BlackRoad (AI infrastructure technology) ≠ BlackRock (financial services)
